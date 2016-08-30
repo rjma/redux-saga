@@ -478,10 +478,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  return { take: take, put: put, close: close,
-	    get __takers__() {
+	    __takers__: function __takers__() {
 	      return takers;
 	    },
-	    get __closed__() {
+	    __closed__: function __closed__() {
 	      return closed;
 	    }
 	  };
@@ -719,7 +719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    selector = _utils.ident;
 	  } else {
-	    (0, _utils.check)(select, _utils.is.notUndef, 'select(selector,[...]): argument selector is undefined');
+	    (0, _utils.check)(selector, _utils.is.notUndef, 'select(selector,[...]): argument selector is undefined');
 	    (0, _utils.check)(selector, _utils.is.func, 'select(selector,[...]): argument ' + selector + ' is not a function');
 	  }
 	  return effect(SELECT, { selector: selector, args: args });
@@ -1054,9 +1054,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	    This may be called by a parent generator to trigger/propagate cancellation
 	    cancel all pending tasks (including the main task), then end the current task.
-	      Cancellation propagates down to the whole execution tree holded by this Parent task
+	     Cancellation propagates down to the whole execution tree holded by this Parent task
 	    It's also propagated to all joiners of this task and their execution tree/joiners
-	      Cancellation is noop for terminated/Cancelled tasks tasks
+	     Cancellation is noop for terminated/Cancelled tasks tasks
 	  **/
 	  function cancel() {
 	    /**
@@ -1106,7 +1106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /**
 	          getting TASK_CANCEL autoamtically cancels the main task
 	          We can get this value here
-	            - By cancelling the parent task manually
+	           - By cancelling the parent task manually
 	          - By joining a Cancelled task
 	        **/
 	        mainTask.isCancelled = true;
@@ -1228,12 +1228,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	      each effect runner must attach its own logic of cancellation to the provided callback
 	      it allows this generator to propagate cancellation downward.
-	        ATTENTION! effect runners must setup the cancel logic by setting cb.cancel = [cancelMethod]
+	       ATTENTION! effect runners must setup the cancel logic by setting cb.cancel = [cancelMethod]
 	      And the setup must occur before calling the callback
-	        This is a sort of inversion of control: called async functions are responsible
+	       This is a sort of inversion of control: called async functions are responsible
 	      of completing the flow by calling the provided continuation; while caller functions
 	      are responsible for aborting the current flow by calling the attached cancel function
-	        Library users can attach their own cancellation logic to promises by defining a
+	       Library users can attach their own cancellation logic to promises by defining a
 	      promise[CANCEL] method in their returned promises
 	      ATTENTION! calling cancel must have no effect on an already completed or cancelled effect
 	    **/

@@ -106,8 +106,8 @@ export function channel(buffer) {
   }
 
   return {take, put, close,
-    get __takers__() { return takers },
-    get __closed__() { return closed }
+    __takers__() { return takers },
+    __closed__() { return closed }
   }
 }
 
